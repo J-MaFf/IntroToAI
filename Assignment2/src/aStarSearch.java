@@ -42,14 +42,21 @@ public class aStarSearch {
         sc.close();
     }
 
-    public void initializeHeuristic(File file){
+    /**
+     * Initializes the heuristic values for each node based on the given file.
+     * Populates huristic map with node -> heuristic value
+     * 
+     * @param file the file containing the node heuristic values
+     * @throws FileNotFoundException if the file is not found
+     */
+    public void initializeHeuristic(File file) throws FileNotFoundException {
         Scanner sc = new Scanner(file);
 
-        while(sc.hasNextLine){
-            String parts = sc.nextLine.split(",");
+        while (sc.hasNextLine()) {
+            String[] parts = sc.nextLine().split(",");
             String node = parts[0];
-            Double heuristicVal = parts[1];
-            heuristic.put
+            Double heuristicVal = Double.parseDouble(parts[1]);
+            heuristic.put(node, heuristicVal);
         }
     }
 
