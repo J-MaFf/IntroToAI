@@ -60,7 +60,7 @@ public class aStarSearch {
         }
     }
 
-    public void search(int start, int goal) { // types not set
+    public void search(String start, String goal) { // types not set
 
     }
 
