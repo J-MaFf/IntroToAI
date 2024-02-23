@@ -1,0 +1,12 @@
+GHS,Nepsic Hunted House,0.81
+GHS,Lancaster cemetery,0.826
+GHS,Halloween Creepy Carnival,0.747
+Nepsic Hunted House,Zombie,0.92
+Nepsic Hunted House,Skeleton House,1.52
+Nepsic Hunted House,William Pond Halloween Party,1.03
+Lancaster cemetery,Skeleton House,0.682
+Halloween Creepy Carnival,Skeleton House,0.9
+Halloween Creepy Carnival,Zombie,0.367
+Skeleton House,William Pond Halloween Party,1.63
+Zombie,Nepsic Hunted House,0.92
+Zombie,Halloween Creepy Carnival,0.367
