@@ -2,8 +2,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Scanner;
@@ -67,12 +70,54 @@ public class aStarSearch {
         sc.close();
     }
 
-    public void search(String start, String goal) { // types not set
+    public List<String> findPath(String start, String goal) {
+        for (String nodeName : graph.keySet()) {
+            Node node = new Node(nodeName);
+            allNodes.put(nodeName, node);
+        }
 
+        Node startNode = allNodes.get(start);
+        startNode.gCost = 0;
+        startNode.fCost = heuristics.getOrDefault(start, 0.0);
+
+        openSet.add(startNode);
+
+        while (!openSet.isEmpty()) {
+            Node current = openSet.poll();
+
+            if (current.name.equals(goal)) {
+                return reconstructPath(current);
+            }
+
+            for (Map.Entry<String, Double> neighborEntry : graph.getOrDefault(current.name, Collections.emptyMap())
+                    .entrySet()) {
+                Node neighbor = allNodes.get(neighborEntry.getKey());
+                double tentativeGCost = current.gCost + neighborEntry.getValue();
+
+                if (tentativeGCost < neighbor.gCost) {
+                    neighbor.parent = current;
+                    neighbor.gCost = tentativeGCost;
+                    neighbor.fCost = tentativeGCost + heuristics.getOrDefault(neighbor.name, 0.0);
+                    if (!openSet.contains(neighbor)) {
+                        openSet.add(neighbor);
+                    }
+                }
+            }
+        }
+
+        return Collections.emptyList(); // Path not found
     }
 
-    public void reconstructPath() { // types not set
-        // Print the path from the start to the goal
+    private List<String> reconstructPath(Node current) {
+        List<String> path = new ArrayList<>();
+        Node temp = current;
 
+        while (temp != null) {
+            path.add(temp.name);
+            temp = temp.parent;
+        }
+
+        Collections.reverse(path);
+        return path;
     }
 }
