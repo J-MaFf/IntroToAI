@@ -5,10 +5,10 @@ public class App {
         File map = new File("src/map.txt");
         File heuristic = new File("src/heuristic.txt");
 
-        aStarSearch instance = new aStarSearch();
+        aStarSearch aStar = new aStarSearch();
 
-        instance.loadGraph(map);
-        instance.initializeHeuristic(heuristic);
+        aStar.loadGraph(map);
+        aStar.initializeHeuristic(heuristic);
 
     }
 }
