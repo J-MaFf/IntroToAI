@@ -3,12 +3,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class aStarSearch {
     private Map<String, Map<String, Double>> graph = new HashMap<>(); // graph = node -> (neighbor, cost)
     private Map<String, Double> heuristic = new HashMap<>(); // heuristic = node -> heruistic value
+    private PriorityQueue<Node> openSet = new PriorityQueue<>();
+    private Map<String, Node> allNodes = new HashMap<>();
 
     /**
      * Loads a graph from a file.
@@ -35,8 +39,10 @@ public class aStarSearch {
             String node2 = parts[1];
             Double weight = Double.parseDouble(parts[3]);
 
-            graph.putIfAbsent(node1, new HashMap<String, Double>());
+            graph.putIfAbsent(node1, new HashMap<>());
             graph.get(node1).put(node2, weight);
+            graph.putIfAbsent(node2, new HashMap<>());
+            graph.get(node2).put(node1, weight);
 
         }
         sc.close();
@@ -58,6 +64,7 @@ public class aStarSearch {
             Double heuristicVal = Double.parseDouble(parts[1]);
             heuristic.put(node, heuristicVal);
         }
+        sc.close();
     }
 
     public void search(String start, String goal) { // types not set
@@ -65,6 +72,7 @@ public class aStarSearch {
     }
 
     public void reconstructPath() { // types not set
+        // Print the path from the start to the goal
 
     }
 }
