@@ -40,7 +40,17 @@ public class aStarSearch {
 
         }
         sc.close();
+    }
 
+    public void initializeHeuristic(File file){
+        Scanner sc = new Scanner(file);
+
+        while(sc.hasNextLine){
+            String parts = sc.nextLine.split(",");
+            String node = parts[0];
+            Double heuristicVal = parts[1];
+            heuristic.put
+        }
     }
 
     public void search(int start, int goal) { // types not set
