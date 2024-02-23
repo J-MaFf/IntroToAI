@@ -1,11 +1,8 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -40,7 +37,7 @@ public class aStarSearch {
             String[] parts = sc.nextLine().split(",");
             String node1 = parts[0];
             String node2 = parts[1];
-            Double weight = Double.parseDouble(parts[3]);
+            Double weight = Double.parseDouble(parts[2]);
 
             graph.putIfAbsent(node1, new HashMap<>());
             graph.get(node1).put(node2, weight);
@@ -70,7 +67,17 @@ public class aStarSearch {
         sc.close();
     }
 
-    public List<String> findPath(String start, String goal) {
+    /**
+     * Finds the path from the start node to the goal node using the A* search
+     * algorithm.
+     *
+     * @param start The name of the start node.
+     * @param goal  The name of the goal node.
+     * @return A list of strings representing the path from the start node to the
+     *         goal node.
+     *         If no path is found, an empty list is returned.
+     */
+    public SearchResult findPath(String start, String goal) {
         for (String nodeName : graph.keySet()) {
             Node node = new Node(nodeName);
             allNodes.put(nodeName, node);
@@ -78,7 +85,7 @@ public class aStarSearch {
 
         Node startNode = allNodes.get(start);
         startNode.gCost = 0;
-        startNode.fCost = heuristics.getOrDefault(start, 0.0);
+        startNode.fCost = heuristic.getOrDefault(start, 0.0);
 
         openSet.add(startNode);
 
@@ -86,7 +93,7 @@ public class aStarSearch {
             Node current = openSet.poll();
 
             if (current.name.equals(goal)) {
-                return reconstructPath(current);
+                return new SearchResult(reconstructPath(current), current.gCost);
             }
 
             for (Map.Entry<String, Double> neighborEntry : graph.getOrDefault(current.name, Collections.emptyMap())
@@ -97,7 +104,7 @@ public class aStarSearch {
                 if (tentativeGCost < neighbor.gCost) {
                     neighbor.parent = current;
                     neighbor.gCost = tentativeGCost;
-                    neighbor.fCost = tentativeGCost + heuristics.getOrDefault(neighbor.name, 0.0);
+                    neighbor.fCost = tentativeGCost + heuristic.getOrDefault(neighbor.name, 0.0);
                     if (!openSet.contains(neighbor)) {
                         openSet.add(neighbor);
                     }
@@ -105,9 +112,15 @@ public class aStarSearch {
             }
         }
 
-        return Collections.emptyList(); // Path not found
+        return new SearchResult(Collections.emptyList(), Double.MAX_VALUE); // Path not found
     }
 
+    /**
+     * Reconstructs the path from the start node to the current node.
+     * 
+     * @param current The current node.
+     * @return The list of node names representing the path.
+     */
     private List<String> reconstructPath(Node current) {
         List<String> path = new ArrayList<>();
         Node temp = current;
