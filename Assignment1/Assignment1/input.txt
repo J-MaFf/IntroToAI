@@ -1,0 +1,15 @@
+12
+Macau China
+Macau Hongkong
+Macau Taiwan
+China Japan
+China India
+China France
+Hongkong Japan
+Hongkong Korea
+Taiwan India
+Korea Neitherland
+India Russia
+France England
+France USA
+Japan USA
