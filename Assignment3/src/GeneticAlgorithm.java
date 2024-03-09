@@ -24,4 +24,12 @@ public class GeneticAlgorithm {
 
     // Methods for running the GA, selection, crossover, etc., will go here
 
+    public void selection() {
+        // Select the fittest chromosomes from the population
+    }
+
+    public void crossover() {
+        // Perform crossover of selected chromosomes
+    }
+
 }
