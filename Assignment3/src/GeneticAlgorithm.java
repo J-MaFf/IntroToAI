@@ -4,38 +4,26 @@ import java.util.List;
 public class GeneticAlgorithm {
     private Population population;
     private int populationSize = 4;
-    private int maxGenerations = 10; // May need to change
+    private int maxGenerations = 100; // Example stopping condition
 
     public GeneticAlgorithm() {
         this.population = new Population(populationSize);
-        this.population.initializePopulation();
+        this.population.initializePopulation(5); // Assuming 5 bits for binary representation
     }
 
-    public void run() {
-        int generationCount = 0;
-        while (generationCount < maxGenerations) {
-            List<Chromosome> parents = selectParents();
-            List<Chromosome> offspring = crossover(parents);
-
-            // Here you might replace the old generation with offspring or merge them
-            // And then evaluate fitness of the new generation
-            generationCount++;
+    private double calculateTotalFitness() {
+        double total = 0;
+        for (Chromosome chromosome : population.getChromosomes()) {
+            total += chromosome.getFitness();
         }
-        // Optionally, print the best solution found
+        return total;
     }
 
-    // Methods for running the GA, selection, crossover, etc., will go here
-
-    /**
-     * Selects parents from the population based on their fitness for reproduction.
-     * 
-     * @return A list of selected parents.
-     */
     public List<Chromosome> selectParents() {
         List<Chromosome> selectedParents = new ArrayList<>();
         double totalFitness = calculateTotalFitness();
 
-        for (int i = 0; i < populationSize; i++) { // Selecting parents for the population
+        for (int i = 0; i < populationSize; i++) {
             double random = Math.random() * totalFitness;
             double runningSum = 0;
 
@@ -50,34 +38,16 @@ public class GeneticAlgorithm {
         return selectedParents;
     }
 
-    /**
-     * Calculates the total fitness of the population.
-     * 
-     * @return The total fitness of the population.
-     */
-    private double calculateTotalFitness() {
-        double total = 0;
-        for (Chromosome chromosome : population.getChromosomes()) {
-            total += chromosome.getFitness();
-        }
-        return total;
-    }
-
-    public void selection() { // Using roulette wheel selection
-        // Select the fittest chromosomes from the population
-    }
-
     public List<Chromosome> crossover(List<Chromosome> parents) {
         List<Chromosome> offspring = new ArrayList<>();
-        for (int i = 0; i < parents.size(); i += 2) { // Assume even number of parents
+        for (int i = 0; i < parents.size(); i += 2) {
             Chromosome parent1 = parents.get(i);
-            Chromosome parent2 = parents.get(i + 1); // Pairwise parents
+            Chromosome parent2 = parents.get(i + 1);
             int len = parent1.getBinaryString().length();
 
             int crossoverPoint1 = (int) (Math.random() * len);
             int crossoverPoint2 = (int) (Math.random() * len);
 
-            // Ensure crossoverPoint1 < crossoverPoint2
             if (crossoverPoint1 > crossoverPoint2) {
                 int temp = crossoverPoint1;
                 crossoverPoint1 = crossoverPoint2;
@@ -98,4 +68,19 @@ public class GeneticAlgorithm {
         return offspring;
     }
 
+    public void run() {
+        int generationCount = 0;
+        while (generationCount < maxGenerations) {
+            List<Chromosome> parents = selectParents();
+            List<Chromosome> offspring = crossover(parents);
+            population.setChromosomes(offspring); // Update population with new generation
+            for (Chromosome c : population.getChromosomes()) {
+                c.calculateFitness(); // Recalculate fitness for new generation
+            }
+            generationCount++;
+            // Optionally, print the population's state here for each generation
+        }
+        // After finishing, you might want to find and display the best solution in the
+        // final population
+    }
 }
