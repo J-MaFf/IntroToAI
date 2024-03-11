@@ -20,10 +20,13 @@ public class Chromosome {
     }
 
     public void calculateFitness() {
-        // Convert binary string to an integer value of x, considering the range [-10,
-        // 10]
-        int x = Integer.parseInt(binaryString, 2) - 10;
+        // Convert binary string to an integer value of x, mapped to the range [-10, 10]
+        int decimalValue = Integer.parseInt(binaryString, 2);
+        int range = 10 - (-10);
+        double step = range / (Math.pow(2, binaryString.length()) - 1);
+        double x = -10 + step * decimalValue; // Adjusting the range mapping
         // Calculate the function value as fitness
         this.fitness = Math.pow(x, 2) + 6 * x + 5;
     }
+
 }
