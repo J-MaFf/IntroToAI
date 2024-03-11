@@ -69,18 +69,34 @@ public class GeneticAlgorithm {
     }
 
     public void run() {
+        System.out.println("Starting GA run");
         int generationCount = 0;
+        Chromosome bestSolution = null;
+
         while (generationCount < maxGenerations) {
             List<Chromosome> parents = selectParents();
             List<Chromosome> offspring = crossover(parents);
             population.setChromosomes(offspring); // Update population with new generation
+            double maxFitness = -Double.MAX_VALUE;
+
             for (Chromosome c : population.getChromosomes()) {
                 c.calculateFitness(); // Recalculate fitness for new generation
+                if (c.getFitness() > maxFitness) {
+                    maxFitness = c.getFitness();
+                    bestSolution = c;
+                }
             }
+
+            System.out.println("Generation " + generationCount + ": Best Fitness = " + maxFitness);
             generationCount++;
-            // Optionally, print the population's state here for each generation
         }
-        // After finishing, you might want to find and display the best solution in the
-        // final population
+
+        // Display the best overall solution
+        if (bestSolution != null) {
+            System.out.println("Best solution found: ");
+            System.out.println(
+                    "Binary String: " + bestSolution.getBinaryString() + ", Fitness: " + bestSolution.getFitness());
+        }
     }
+
 }
