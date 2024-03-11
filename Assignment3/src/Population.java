@@ -1,22 +1,30 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Population {
-    private Chromosome[] chromosomes;
+    private List<Chromosome> chromosomes;
 
     public Population(int size) {
-        chromosomes = new Chromosome[size];
+        chromosomes = new ArrayList<>(size);
     }
 
-    public void initializePopulation() {
-        for (int i = 0; i < chromosomes.length; i++) {
-            String binaryString = Integer.toBinaryString((int) (Math.random() * ((1 << 5) - 1))); // 5-bit binary
-            chromosomes[i] = new Chromosome(binaryString);
-            chromosomes[i].calculateFitness();
+    public void initializePopulation(int chromosomeLength) {
+        for (int i = 0; i < chromosomes.size(); i++) {
+            String binaryString = Integer.toBinaryString((int) (Math.random() * (Math.pow(2, chromosomeLength) - 1)));
+            while (binaryString.length() < chromosomeLength) {
+                binaryString = "0" + binaryString; // Pad with leading zeros
+            }
+            Chromosome chromosome = new Chromosome(binaryString);
+            chromosome.calculateFitness();
+            chromosomes.add(chromosome);
         }
     }
 
-    public Chromosome[] getChromosomes() {
+    public List<Chromosome> getChromosomes() {
         return chromosomes;
     }
 
-    // Additional methods for selection, crossover, and getting the fittest
-    // chromosome will be added here
+    public void setChromosomes(List<Chromosome> newGeneration) {
+        this.chromosomes = newGeneration;
+    }
 }
