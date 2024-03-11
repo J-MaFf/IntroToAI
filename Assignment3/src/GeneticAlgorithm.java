@@ -12,17 +12,16 @@ public class GeneticAlgorithm {
     }
 
     public void run() {
-        int generation = 0;
-        while (generation < maxGenerations) {
-            // Perform selection
-            // Perform crossover
-            // Optionally, perform mutation
-            // Evaluate fitness of new population
-            // Possibly update best solution found
-            // Prepare for next generation
-            generation++;
+        int generationCount = 0;
+        while (generationCount < maxGenerations) {
+            List<Chromosome> parents = selectParents();
+            List<Chromosome> offspring = crossover(parents);
+
+            // Here you might replace the old generation with offspring or merge them
+            // And then evaluate fitness of the new generation
+            generationCount++;
         }
-        // Output the best solution found
+        // Optionally, print the best solution found
     }
 
     // Methods for running the GA, selection, crossover, etc., will go here
