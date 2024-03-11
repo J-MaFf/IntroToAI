@@ -6,6 +6,10 @@ public class Population {
 
     public Population(int size) {
         chromosomes = new ArrayList<>(size);
+        // Initialize with nulls to set the correct size
+        for (int i = 0; i < size; i++) {
+            chromosomes.add(null);
+        }
     }
 
     public void initializePopulation(int chromosomeLength) {
@@ -16,7 +20,7 @@ public class Population {
             }
             Chromosome chromosome = new Chromosome(binaryString);
             chromosome.calculateFitness();
-            chromosomes.add(chromosome);
+            chromosomes.set(i, chromosome); // Correctly set the chromosome
         }
     }
 
