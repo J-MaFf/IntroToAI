@@ -24,7 +24,7 @@ public class GeneticAlgorithm {
 
     // Methods for running the GA, selection, crossover, etc., will go here
 
-    public void selection() {
+    public void selection() { // Using roulette wheel selection
         // Select the fittest chromosomes from the population
     }
 
