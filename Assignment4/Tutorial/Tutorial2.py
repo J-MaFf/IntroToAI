@@ -1,5 +1,4 @@
 import pysmile
-import Assignment4.Tutorial.pysmile_license as pysmile_license
 
 
 # Tutorial2 loads the XDSL file created by Tutorial1,

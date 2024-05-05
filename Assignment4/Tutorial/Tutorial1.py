@@ -1,7 +1,5 @@
 import pysmile
 
-import Assignment4.Tutorial.pysmile_license as pysmile_license
-
 
 # Tutorial1 creates a simple network with three nodes,
 
@@ -34,7 +32,7 @@ class Tutorial1:
 
         f = self.create_cpt_node(
             net,  # (pysmile.Network): The network to add the node to.
-            "Forecast"  # id (int): The ID of the node.
+            "Forecast",  # id (int): The ID of the node.
             "Expert forecast",  # name (str): The name of the node.
             [
                 "Good",
@@ -47,8 +45,8 @@ class Tutorial1:
 
         net.add_arc(e, s)  # Economy -> Success
         net.add_arc(s, f)  # Success -> Forecast
-        net.add_arc(  # Economy -> Forecast. You can also use node names
-            "Economy",
+        net.add_arc(  # Economy -> Forecast.
+            "Economy",  # You can also use node names instead of handles.
             "Forecast",
         )
         # The following code sets the probabilities for each node
@@ -93,41 +91,41 @@ class Tutorial1:
 
         print("Tutorial1 complete: Network written to tutorial1.xdsl")
 
+    def create_cpt_node(self, net, id, name, outcomes, x_pos, y_pos):
+        """
+        Create a CPT (Conditional Probability Table) node in the network.
 
-def create_cpt_node(self, net, id, name, outcomes, x_pos, y_pos):
-    """
-    Create a CPT (Conditional Probability Table) node in the network.
+        Args:
+            net (pysmile.Network): The network to add the node to.
+            id (int): The ID of the node.
+            name (str): The name of the node.
+            outcomes (list): A list of outcome names for the node.
+            x_pos (int): The x-coordinate position of the node.
+            y_pos (int): The y-coordinate position of the node.
 
-    Args:
-        net (pysmile.Network): The network to add the node to.
-        id (int): The ID of the node.
-        name (str): The name of the node.
-        outcomes (list): A list of outcome names for the node.
-        x_pos (int): The x-coordinate position of the node.
-        y_pos (int): The y-coordinate position of the node.
+        Returns:
+            int: The handle of the created node.
 
-    Returns:
-        int: The handle of the created node.
+        """
+        handle = net.add_node(  # It is called handle because it is a reference to the node in the network
+            pysmile.NodeType.CPT,
+            id,  # This creates a node with a Conditional Probability Table (CPT)
+        )
 
-    """
-    handle = net.add_node(
-        pysmile.NodeType.CPT, id
-    )  # It is called handle because it is a reference to the node in the network
+        net.set_node_name(handle, name)
 
-    net.set_node_name(handle, name)
+        net.set_node_position(
+            handle, x_pos, y_pos, 85, 55
+        )  # 85 and 55 are the width and height of the node
 
-    net.set_node_position(
-        handle, x_pos, y_pos, 85, 55
-    )  # 85 and 55 are the width and height of the node
+        initial_outcome_count = net.get_outcome_count(
+            handle
+        )  # This is the number of outcomes the node has
 
-    initial_outcome_count = net.get_outcome_count(
-        handle
-    )  # This is the number of outcomes the node has
+        for i in range(0, initial_outcome_count):
+            net.set_outcome_id(handle, i, outcomes[i])  # This sets the name of the outcome
 
-    for i in range(0, initial_outcome_count):
-        net.set_outcome_id(handle, i, outcomes[i])  # This sets the name of the outcome
+        for i in range(initial_outcome_count, len(outcomes)):
+            net.add_outcome(handle, outcomes[i])  # This adds a new outcome to the node
 
-    for i in range(initial_outcome_count, len(outcomes)):
-        net.add_outcome(handle, outcomes[i])  # This adds a new outcome to the node
-
-    return handle
+        return handle

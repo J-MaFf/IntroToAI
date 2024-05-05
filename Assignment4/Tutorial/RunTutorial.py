@@ -1,26 +1,26 @@
 import Tutorial1 as BaeysianNetwork
 
 # use pysmile_license.py to activate the license
-import Assignment4.Tutorial.pysmile_license as pysmile_license
+import pysmile_license as pylicense
 
 
 class RunTutorial:
     def __init__(self):
-        self.BaeysNet = BaeysianNetwork.Tutorial1()
+        print("Starting RunTutorial...")
+        self.license = pylicense
+        # Check for tutorial1.xdsl file, if not found run Tutorial1
+        try:
+            with open("tutorial1.xdsl") as file:
+                pass
+        except FileNotFoundError:
+            print("tutorial1.xdsl file not found. Creating tutorial1.xdsl...")
+            self.BaeysNet = BaeysianNetwork.Tutorial1()
+        else:
+            print("tutorial1.xdsl file found, skipping creation.")
 
-    def run_tutorial1(self):  # Tutorail1 creates a Bayesian Network
-        self.BaeysNet.create_tutorial1()
-
-    def run_tutorial2(self):  # Tutorial2 uses the Bayesian Network created by Tutorial1
-        self.BaeysNet.create_tutorial2()  # and performs various operations on the network.
-
-    def run(self):
-        self.run_tutorial1()
-        # self.run_tutorial2()
-
-    def license(self):
-        pysmile_license.license()
+        # Run Tutorial2
 
 
-run = RunTutorial().BaeysNet
-run.run()
+# Run the tutorial
+RunTutorial()
+print("Tutorial complete.")
