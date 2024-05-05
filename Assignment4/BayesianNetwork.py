@@ -1,22 +1,24 @@
 import pysmile as ps
+
+
 class BayesianNetwork:
-    """
-    Represents a Bayesian Network.
+    # Thes class will use pysmile to create a Bayesian Network
+    def __init__(self, name):
+        """
+        Initializes the BayesianNetwork class.
 
-    Attributes:
-        nodes (list): A list of Node objects representing the nodes in the network.
-        node_dict (dict): A dictionary mapping node names to Node objects.
-        node_parents (dict): A dictionary mapping node names to lists of parent node names.
-        node_children (dict): A dictionary mapping node names to lists of child node names.
-        node_values (dict): A dictionary mapping node names to lists of possible values.
-        node_cpt (dict): A dictionary mapping node names to conditional probability tables.
-    """
+        This method creates a Bayesian network using the PySmile library and sets up the nodes and their definitions.
+        The network represents a simple example of a probabilistic model with three nodes: Economy, Success, and Forecast.
+        The nodes are connected by arcs to represent dependencies between them.
 
-    def __init__(self, nodes):
-        self.nodes = nodes
-        self.node_dict = {node.name: node for node in nodes}
-        self.node_parents = {node.name: node.parents for node in nodes}
-        self.node_children = {node.name: node.children for node in nodes}
-        self.node_values = {node.name: node.values for node in nodes}
-        self.node_cpt = {node.name: node.cpt for node in nodes}
-    
+        Args:
+            name (str): The name of the network.
+
+        Returns:
+            None
+        """
+        self.net = ps.Network()
+        self.name = name
+        print(
+            "This is a very long line of text that is specifically designed to exceed the one hundred character limit that we have set for our Python formatter."
+        )
