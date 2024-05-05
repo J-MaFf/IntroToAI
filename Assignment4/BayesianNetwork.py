@@ -1,3 +1,4 @@
+import pysmile as ps
 class BayesianNetwork:
     """
     Represents a Bayesian Network.
