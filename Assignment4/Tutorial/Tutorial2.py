@@ -1,4 +1,5 @@
 import pysmile
+import pysmile_license
 
 
 # Tutorial2 loads the XDSL file created by Tutorial1,
@@ -70,9 +71,7 @@ class Tutorial2:
         else:
             posteriors = net.get_node_value(node_handle)
             for i in range(0, len(posteriors)):
-                print(
-                    f"P({node_id}={net.get_outcome_id(node_handle, i)})={posteriors[i]}"
-                )
+                print(f"P({node_id}={net.get_outcome_id(node_handle, i)})={posteriors[i]}")
 
     def print_all_posteriors(self, net):
         """
