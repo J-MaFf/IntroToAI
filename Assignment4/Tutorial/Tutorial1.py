@@ -1,6 +1,6 @@
 import pysmile
 
-# import pysmile_license
+import Assignment4.Tutorial.pysmile_license as pysmile_license
 
 
 # Tutorial1 creates a simple network with three nodes,

@@ -1,6 +1,7 @@
 import Tutorial1 as BaeysianNetwork
 
-import pysmile_license
+# use pysmile_license.py to activate the license
+import Assignment4.Tutorial.pysmile_license as pysmile_license
 
 
 class RunTutorial:
@@ -17,5 +18,9 @@ class RunTutorial:
         self.run_tutorial1()
         # self.run_tutorial2()
 
+    def license(self):
+        pysmile_license.license()
 
-run = RunTutorial().BaeysNet.run_tutorial1()
+
+run = RunTutorial().BaeysNet
+run.run()
