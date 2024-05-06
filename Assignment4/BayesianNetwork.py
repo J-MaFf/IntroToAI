@@ -19,6 +19,8 @@ class BayesianNetwork:
         """
         self.net = ps.Network()
         self.name = name
+        self.createNodes()
+        self.createArcs()
 
     def create_cpt_node(self, net, id, name, outcomes, x_pos, y_pos):
         """
@@ -98,3 +100,22 @@ class BayesianNetwork:
 
         # Create Prior for Asthma node
         self.asthmaNode = self.create_cpt_node(self.net, 8, "Asthma", ["No", "Yes"], 450, 50)
+
+    def createArcs(self):
+        """
+        Creates arcs between the asthma node and other nodes in the Bayesian network.
+
+        This method adds arcs from the asthma node to the geographical area, education,
+        allergy, smoke, sedentary, age, sex, and urbanization nodes in the network.
+
+        Returns:
+            None
+        """
+        self.net.add_arc(self.asthmaNode, self.geographialAreaNode)  # Asthma -> Geographical Area
+        self.net.add_arc(self.asthmaNode, self.educationNode)  # Asthma -> Education
+        self.net.add_arc(self.asthmaNode, self.allergyNode)  # Asthma -> Allergy
+        self.net.add_arc(self.asthmaNode, self.smokeNode)  # Asthma -> Smoke
+        self.net.add_arc(self.asthmaNode, self.sedentaryNode)  # Asthma -> Sedentary
+        self.net.add_arc(self.asthmaNode, self.ageNode)  # Asthma -> Age
+        self.net.add_arc(self.asthmaNode, self.sexNode)  # Asthma -> Sex
+        self.net.add_arc(self.asthmaNode, self.urbanizationNode)  # Asthma -> Urbanization
