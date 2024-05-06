@@ -1,4 +1,5 @@
 import pysmile
+import pysmile_license
 
 
 class BayesianNetwork:
@@ -17,13 +18,18 @@ class BayesianNetwork:
         Returns:
             None
         """
+        self.license = pysmile_license
         self.net = pysmile.Network()
         self.name = name
         self.createNodes()
         self.createArcs()
         self.setNodeDefinition()
-        # 1.	What is the probability of a young, smoker, male to get ashma?
-        # 2. What is the probability of an old, female, non-smoker, who lives in the north to have ashma?
+
+        # Write the network to a file
+        self.net.write_file(f"{name}.xdsl")
+
+        # evidence
+        self.evidence()
 
     def createCptNode(self, net, id, name, outcomes, x_pos, y_pos):
         """
@@ -41,10 +47,7 @@ class BayesianNetwork:
             int: The handle of the created node.
 
         """
-        handle = net.add_node(  # It is called handle because it is a reference to the node in the network
-            pysmile.NodeType.CPT,
-            id,  # This creates a node with a Conditional Probability Table (CPT)
-        )
+        handle = self.net.add_node(pysmile.NodeType.CPT, id)
 
         net.set_node_name(handle, name)
 
@@ -64,6 +67,66 @@ class BayesianNetwork:
 
         return handle
 
+    def print_posteriors(self, net, node_handle):
+        """
+        Prints the posteriors of a given node in the network.
+        Posteriors are the probabilities of each outcome of the node given the evidence.
+
+        Args:
+            net: The network object.
+            node_handle: The handle of the node.
+
+        Returns:
+            None
+        """
+
+        node_id = net.get_node_id(node_handle)
+
+        if net.is_evidence(node_handle):
+            print(f"{node_id} has evidence set ({net.get_evidence_id(node_handle)})")
+        else:
+            posteriors = net.get_node_value(node_handle)
+            for i in range(0, len(posteriors)):
+                print(f"P({node_id}={net.get_outcome_id(node_handle, i)})={posteriors[i]}")
+
+    def print_all_posteriors(self, net):
+        """
+        Prints the posteriors of all nodes in the network.
+
+        Args:
+            net: The network object.
+
+        Returns:
+            None
+        """
+
+        for handle in net.get_all_nodes():
+            self.print_posteriors(net, handle)
+
+    def change_evidence_and_update(self, net, node_id, outcome_id):
+        """
+        Changes the evidence of a node in the network and updates the beliefs.
+
+        Args:
+            net: The network object.
+            node_id: The ID of the node.
+            outcome_id: The ID of the outcome.
+
+        Returns:
+            None
+        """
+
+        if outcome_id is not None:
+            net.set_evidence(node_id, outcome_id)
+        else:
+            net.clear_evidence(node_id)
+
+        net.update_beliefs()
+
+        self.print_all_posteriors(net)
+
+        print()
+
     def createNodes(self):
         """
         Creates the nodes for the Bayesian network.
@@ -73,34 +136,47 @@ class BayesianNetwork:
         """
         # Create Geographical_area node
         self.geographialAreaNode = self.createCptNode(
-            self.net, 0, "Geographical Area", ["Centre", "North", "South islands"], 50, 50
+            self.net,
+            "GeographicalArea",
+            "GeographicalArea",
+            ["Centre", "North", "South islands"],
+            50,
+            50,
         )
 
         # Create Education node
-        self.educationNode = self.createCptNode(self.net, 1, "Education", ["High", "Low"], 100, 50)
+        self.educationNode = self.createCptNode(
+            self.net, "Education", "Education", ["High", "Low"], 100, 50
+        )
 
         # Create Allergy node
-        self.allergyNode = self.createCptNode(self.net, 2, "Allergy", ["No", "Yes"], 150, 50)
+        self.allergyNode = self.createCptNode(
+            self.net, "Allergy", "Allergy", ["No", "Yes"], 150, 50
+        )
 
         # Create Smoke node
-        self.smokeNode = self.createCptNode(self.net, 3, "Smoke", ["No", "Yes"], 200, 50)
+        self.smokeNode = self.createCptNode(self.net, "Smoke", "Smoke", ["No", "Yes"], 200, 50)
 
         # Create Sedentary node
-        self.sedentaryNode = self.createCptNode(self.net, 4, "Sedentary", ["No", "Yes"], 250, 50)
+        self.sedentaryNode = self.createCptNode(
+            self.net, "Sedentary", "Sedentary", ["No", "Yes"], 250, 50
+        )
 
         # Create Age node
-        self.ageNode = self.createCptNode(self.net, 5, "Age", ["Adult", "Old", "Young"], 300, 50)
+        self.ageNode = self.createCptNode(
+            self.net, "Age", "Age", ["Adult", "Old", "Young"], 300, 50
+        )
 
         # Create Sex node
-        self.sexNode = self.createCptNode(self.net, 6, "Sex", ["Female", "Male"], 350, 50)
+        self.sexNode = self.createCptNode(self.net, "Sex", "Sex", ["Female", "Male"], 350, 50)
 
         # Create Urbanization node
         self.urbanizationNode = self.createCptNode(
-            self.net, 7, "Urbanization", ["High", "Low", "Medium"], 400, 50
+            self.net, "Urbanization", "Urbanization", ["High", "Low", "Medium"], 400, 50
         )
 
         # Create Prior for Asthma node
-        self.asthmaNode = self.createCptNode(self.net, 8, "Asthma", ["No", "Yes"], 450, 50)
+        self.asthmaNode = self.createCptNode(self.net, "Asthma", "Asthma", ["No", "Yes"], 450, 50)
 
     def createArcs(self):
         """
@@ -194,3 +270,50 @@ class BayesianNetwork:
 
         asthmaDef = [0.57096189, 0.42903811]  # P(Asthma=No), P(Asthma=Yes)
         self.net.set_node_definition(self.asthmaNode, asthmaDef)
+
+    def clear_evidence(self):
+        """
+        Clears the evidence from all nodes in the network.
+
+        Returns:
+            None
+        """
+        for handle in self.net.get_all_nodes():
+            self.net.clear_evidence(handle)
+
+    def evidence(self):
+        self.net.update_beliefs()
+        print("Posteriors with no evidence set:")
+        self.print_all_posteriors(self.net)
+        # 1.	What is the probability of a young, smoker, male to get ashma?
+        # Set evidence to young
+        self.change_evidence_and_update(self.net, "Age", "Young")
+        # Set evidence to smoker
+        self.change_evidence_and_update(self.net, "Smoke", "Yes")
+        # Set evidence to female
+        self.change_evidence_and_update(self.net, "Sex", "Female")
+
+        self.net.update_beliefs()
+
+        print("What is the probability of a young, smoker, male to get ashma?")
+        self.print_posteriors(self.net, self.asthmaNode)
+
+        # 2. What is the probability of an old, female, non-smoker, who lives in the north to have ashma?
+        # Clear evidence
+        self.clear_evidence()
+        self.net.update_beliefs()
+        # Set evidence to old
+        self.change_evidence_and_update(self.net, "Age", "Old")
+        # Set evidence to female
+        self.change_evidence_and_update(self.net, "Sex", "Female")
+        # Set evidence to non-smoker
+        self.change_evidence_and_update(self.net, "Smoke", "No")
+        # Set evidence to north
+        self.change_evidence_and_update(self.net, "GeographicalArea", "North")
+
+        self.net.update_beliefs()
+
+        print(
+            "What is the probability of an old, femmale, non-smoker, who lives in the north to have ashma?"
+        )
+        self.print_posteriors(self.net, self.asthmaNode)

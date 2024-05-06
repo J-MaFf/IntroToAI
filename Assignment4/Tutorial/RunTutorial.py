@@ -1,7 +1,7 @@
 import Tutorial1 as BaeysianNetwork
 
 # use pysmile_license.py to activate the license
-import pysmile_license as pylicense
+import Assignment4.pysmile_license as pylicense
 
 
 class RunTutorial:

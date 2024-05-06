@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file was created by ACADEMIC version of SMILE -->
+<smile version="1.0" id="Unnamed" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="Asthma">
+			<state id="No" />
+			<state id="Yes" />
+			<probabilities>0.57096189 0.42903811</probabilities>
+		</cpt>
+		<cpt id="GeographicalArea">
+			<state id="Centre" />
+			<state id="North" />
+			<state id="State2" />
+			<parents>Asthma</parents>
+			<probabilities>0.18690401 0.44310235 0.36999364 0.20558376 0.39509306 0.39932318</probabilities>
+		</cpt>
+		<cpt id="Education">
+			<state id="High" />
+			<state id="Low" />
+			<parents>Asthma</parents>
+			<probabilities>0.5009535899999999 0.49904641 0.40270728 0.59729272</probabilities>
+		</cpt>
+		<cpt id="Allergy">
+			<state id="No" />
+			<state id="Yes" />
+			<parents>Asthma</parents>
+			<probabilities>0.87857597 0.12142403 0.5177665 0.4822335</probabilities>
+		</cpt>
+		<cpt id="Smoke">
+			<state id="No" />
+			<state id="Yes" />
+			<parents>Asthma</parents>
+			<probabilities>0.84678957 0.15321043 0.83671743 0.16328257</probabilities>
+		</cpt>
+		<cpt id="Sedentary">
+			<state id="No" />
+			<state id="Yes" />
+			<parents>Asthma</parents>
+			<probabilities>0.24920534 0.7507946599999999 0.21150592 0.78849408</probabilities>
+		</cpt>
+		<cpt id="Age">
+			<state id="Adult" />
+			<state id="Old" />
+			<state id="Young" />
+			<parents>Asthma</parents>
+			<probabilities>0.54609027 0.33121424 0.12269549 0.45939086 0.43824027 0.10236887</probabilities>
+		</cpt>
+		<cpt id="Sex">
+			<state id="Female" />
+			<state id="Male" />
+			<parents>Asthma</parents>
+			<probabilities>0.52765416 0.47234584 0.54060914 0.45939086</probabilities>
+		</cpt>
+		<cpt id="Urbanization">
+			<state id="High" />
+			<state id="Low" />
+			<state id="Medium" />
+			<parents>Asthma</parents>
+			<probabilities>0.30769231 0.27908455 0.41322314 0.3248731 0.27580372 0.39932318</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="SMILE_ACADEMIC 2.2.4@c77971fb0fbf" name="Unnamed">
+			<node id="GeographicalArea">
+				<name>GeographicalArea</name>
+				<interior color="e5f6f7" />
+				<outline color="0000bb" />
+				<font color="000000" name="MS Sans Serif" size="8" />
+				<position>50 50 135 105</position>
+			</node>
+			<node id="Education">
+				<name>Education</name>
+				<interior color="e5f6f7" />
+				<outline color="0000bb" />
+				<font color="000000" name="MS Sans Serif" size="8" />
+				<position>100 50 185 105</position>
+			</node>
+			<node id="Allergy">
+				<name>Allergy</name>
+				<interior color="e5f6f7" />
+				<outline color="0000bb" />
+				<font color="000000" name="MS Sans Serif" size="8" />
+				<position>150 50 235 105</position>
+			</node>
+			<node id="Smoke">
+				<name>Smoke</name>
+				<interior color="e5f6f7" />
+				<outline color="0000bb" />
+				<font color="000000" name="MS Sans Serif" size="8" />
+				<position>200 50 285 105</position>
+			</node>
+			<node id="Sedentary">
+				<name>Sedentary</name>
+				<interior color="e5f6f7" />
+				<outline color="0000bb" />
+				<font color="000000" name="MS Sans Serif" size="8" />
+				<position>250 50 335 105</position>
+			</node>
+			<node id="Age">
+				<name>Age</name>
+				<interior color="e5f6f7" />
+				<outline color="0000bb" />
+				<font color="000000" name="MS Sans Serif" size="8" />
+				<position>300 50 385 105</position>
+			</node>
+			<node id="Sex">
+				<name>Sex</name>
+				<interior color="e5f6f7" />
+				<outline color="0000bb" />
+				<font color="000000" name="MS Sans Serif" size="8" />
+				<position>350 50 435 105</position>
+			</node>
+			<node id="Urbanization">
+				<name>Urbanization</name>
+				<interior color="e5f6f7" />
+				<outline color="0000bb" />
+				<font color="000000" name="MS Sans Serif" size="8" />
+				<position>400 50 485 105</position>
+			</node>
+			<node id="Asthma">
+				<name>Asthma</name>
+				<interior color="e5f6f7" />
+				<outline color="0000bb" />
+				<font color="000000" name="MS Sans Serif" size="8" />
+				<position>450 50 535 105</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>
