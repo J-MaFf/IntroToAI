@@ -21,6 +21,9 @@ class BayesianNetwork:
         self.name = name
         self.createNodes()
         self.createArcs()
+        self.setNodeDefinition()
+        # 1.	What is the probability of a young, smoker, male to get ashma?
+        # 2. What is the probability of an old, female, non-smoker, who lives in the north to have ashma?
 
     def createCptNode(self, net, id, name, outcomes, x_pos, y_pos):
         """
@@ -190,3 +193,4 @@ class BayesianNetwork:
         self.net.set_node_definition(self.urbanizationNode, urbanizationDef)
 
         asthmaDef = [0.57096189, 0.42903811]  # P(Asthma=No), P(Asthma=Yes)
+        self.net.set_node_definition(self.asthmaNode, asthmaDef)
