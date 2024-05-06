@@ -123,7 +123,7 @@ class BayesianNetwork:
 
         net.update_beliefs()
 
-        self.print_all_posteriors(net)
+        # self.print_all_posteriors(net)
 
         print()
 
